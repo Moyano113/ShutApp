@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                 u.setUsuario(txtUsuario.getText().toString());
                 u.setContrasena(txtContrasena.getText().toString());
 
+                //Se comprueba que la información introducida en los campos sea correcta
                 if((u.getUsuario().equals("") || u.getContrasena().equals(""))){
                     makeToast("Campos vacíos");
                 }else if(cu.validate(u.getUsuario(), u.getContrasena()) == 0){
