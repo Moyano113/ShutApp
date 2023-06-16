@@ -5,56 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/verde_principal"
-    tools:context=".vista.MainActivity">
-
-    <View
-        android:id="@+id/viewFondoChat"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/fondo_chat"
-        app:layout_constraintBottom_toTopOf="@+id/txtMsgEnviar"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <View
-        android:id="@+id/viewFondoInfo"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/fondo_info"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <FrameLayout
-        android:id="@+id/flEnviar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/enviar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/btnEnviar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="12dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+    android:background="@color/white"
+    tools:context=".controlador.MainActivity">
 
 
     <EditText
         android:id="@+id/txtMsgEnviar"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="12dp"
+        android:layout_width="304dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/fondo_enviar"
@@ -65,64 +24,93 @@
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:textColor="@color/black"
+        android:textColorHint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/flEnviar"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.168"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvChat"
+        app:layout_constraintVertical_bias="0.538" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="60dp" />
+        app:layout_constraintGuide_begin="66dp" />
 
     <TextView
         android:id="@+id/lblUsuario"
-        android:textStyle="bold"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Usuario: Álvaro"
         android:paddingLeft="16dp"
+        android:text="Usuario: Álvaro"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.053"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.487" />
 
     <TextView
         android:id="@+id/lblIp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textColor="@color/black"
+        android:layout_width="27dp"
+        android:layout_height="17dp"
         android:text="IP:"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toStartOf="@+id/txtIp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.857"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.489" />
 
     <EditText
         android:id="@+id/txtIp"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="Ip a conectar"
+        android:hint="Ip a conectar..."
         android:minHeight="48dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="@+id/viewFondoInfo"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.962"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.888" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChat"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:orientation="vertical"
-        android:overScrollMode="never"
-        android:padding="20dp"
-        android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="@id/viewFondoChat"
-        app:layout_constraintTop_toBottomOf="@id/guideline"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="26dp" />
+        android:background="@color/verde_principal"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:layout_constraintVertical_bias="0.38" />
+
+    <ImageView
+        android:id="@+id/btnEnviar"
+        android:layout_width="77dp"
+        android:layout_height="46dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtMsgEnviar"
+        app:layout_constraintTop_toBottomOf="@+id/rvChat"
+        app:srcCompat="@drawable/enviar" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8590971" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

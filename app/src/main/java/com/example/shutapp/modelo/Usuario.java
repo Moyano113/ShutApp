@@ -1,5 +1,6 @@
 package com.example.shutapp.modelo;
 
+//Clase usada para guardar la informacion del usuario que este usando el chat
 public class Usuario {
     private int id;
     private String usuario;

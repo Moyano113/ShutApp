@@ -1,65 +1,60 @@
 package com.example.shutapp.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shutapp.R;
-import com.example.shutapp.modelo.Envio;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Envio> listMsg;
-    private final int RECIBIDO = 1;
-    private final int ENVIADO = 0;
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder> {
 
-    public void setListaMensajes(List<Envio> listMsg) {
-        this.listMsg = listMsg;
+    public List<String> listMsg;
+
+    public RecyclerAdapter() {
+        this.listMsg = new ArrayList<String>();
     }
 
-    public RecyclerAdapter(List<Envio> listMsg) {
-        this.listMsg = listMsg;
+    public void insertarItem(String mensaje){
+        listMsg.add(mensaje);
+        notifyDataSetChanged();
     }
 
-    public void addMsg(Envio envio){
-        listMsg.add(envio);
+    public List<String> getListMsg() {
+        return listMsg;
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        switch (viewType) {
-            case ENVIADO:
-                View vEnviado = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_msg_enviado, parent, false);
-                return new ViewHolderEnviado(vEnviado);
-            case RECIBIDO:
-            default:
-                View vRecibido = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_msg_recibido, parent, false);
-                return new ViewHolderRecibido(vRecibido);
-        }
+    public RecyclerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        RecyclerHolder holder;
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_msg_list, parent, false);
+        holder = new RecyclerHolder(v);
+
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
-        switch (holder.getItemViewType()) {
-            case ENVIADO:
-                ViewHolderEnviado vhEnviado = (ViewHolderEnviado) holder;
-                Envio enviado = listMsg.get(i);
-                vhEnviado.txtEnviado.setText(enviado.getNombre() + ": " + enviado.getMsg());
-                break;
-            case RECIBIDO:
-                ViewHolderRecibido vhRecibido = (ViewHolderRecibido) holder;
-                Envio recibido = listMsg.get(i);
-                vhRecibido.txtRecibido.setText(recibido.getMsg());
-                break;
+    public void onBindViewHolder(@NonNull RecyclerHolder holder, int i) {
+
+        String mensaje = listMsg.get(i);
+
+        if(mensaje.substring(0,1).equals("e")){
+            holder.txtEnviado.setText(mensaje.substring(3));
+            holder.txtRecibido.setText("");
+        }else{
+            holder.txtRecibido.setText(mensaje.substring(3));
+            holder.txtEnviado.setText("");
         }
+
     }
 
     @Override
@@ -67,24 +62,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return listMsg.size();
     }
 
+    class RecyclerHolder extends RecyclerView.ViewHolder{
+        TextView txtEnviado;
+        TextView txtRecibido;
 
-
-    class ViewHolderEnviado extends RecyclerView.ViewHolder {
-        EditText txtEnviado;
-
-        ViewHolderEnviado(View itemView) {
+        public RecyclerHolder(@NonNull View itemView){
             super(itemView);
-            this.txtEnviado = itemView.findViewById(R.id.txtEnviado);
-        }
-
-    }
-
-    class ViewHolderRecibido extends RecyclerView.ViewHolder {
-        EditText txtRecibido;
-
-        ViewHolderRecibido(View itemView) {
-            super(itemView);
-            this.txtRecibido = itemView.findViewById(R.id.txtRecibido);
+            txtEnviado = (TextView) itemView.findViewById(R.id.enviado);
+            txtRecibido = (TextView) itemView.findViewById(R.id.recibido);
         }
     }
 }

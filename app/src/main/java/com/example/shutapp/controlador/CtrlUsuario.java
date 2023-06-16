@@ -11,6 +11,7 @@ import com.example.shutapp.modelo.Usuario;
 
 import java.util.ArrayList;
 
+//Clase encargada de controlar todos los metodos en referencia al usuario que usa el chat
 public class CtrlUsuario {
     private Context c;
     private Usuario u;
@@ -27,19 +28,7 @@ public class CtrlUsuario {
         u = new Usuario();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     //Metodo usado para validar el login del usuario, es decir si el usuario y la contraseña
     //coinciden con alguien registrado en la base de datos.
     public int validate(String usuario, String contrasena){

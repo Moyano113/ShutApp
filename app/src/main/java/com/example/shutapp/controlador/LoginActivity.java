@@ -1,4 +1,4 @@
-package com.example.shutapp.vista;
+package com.example.shutapp.controlador;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shutapp.R;
-import com.example.shutapp.controlador.CtrlUsuario;
 import com.example.shutapp.modelo.Usuario;
 
+//Activity que se encarga del registro y el inicio de sesion del usuario
 public class LoginActivity extends AppCompatActivity {
     private EditText txtUsuario;
     private EditText txtContrasena;
@@ -30,7 +30,8 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister = (Button) findViewById(R.id.btnRegister);
         cu = new CtrlUsuario(getApplicationContext());
 
-        //Botón "ENTRAR"
+        //Botón "ENTRAR" que valida la informacion introducida por el usuario y comprueba que este
+        //esté en la BD
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //Botón "REGISTRARSE"
+        //Botón "REGISTRARSE" encargado de registrar a un usuario en la BD
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +74,8 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
+    //Metodo encargado de que cuando el usuario se loguee o se registre correctamente pase a la
+    //MainActivity
     public void cambiaMain(Usuario u){
         Intent iMain = new Intent(LoginActivity.this, MainActivity.class);
         iMain.putExtra("user", u.getUsuario());
