@@ -5,9 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/white"
+    android:background="@color/verde_principal"
     tools:context=".controlador.MainActivity">
 
+    <View
+        android:id="@+id/viewFondoChat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/fondo_chat"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/txtMsgEnviar"
+        tools:layout_editor_absoluteX="-16dp" />
+
+    <View
+        android:id="@+id/viewFondoInfo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/fondo_info"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/txtMsgEnviar"
@@ -15,7 +33,7 @@
         android:layout_height="38dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="12dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/fondo_enviar"
         android:hint="Escribe un mensaje..."
         android:imeOptions="actionDone"
@@ -30,7 +48,7 @@
         app:layout_constraintHorizontal_bias="0.168"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvChat"
-        app:layout_constraintVertical_bias="0.538" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -78,16 +96,16 @@
         android:textColorHint="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.962"
+        app:layout_constraintHorizontal_bias="0.966"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.888" />
+        app:layout_constraintVertical_bias="0.388" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChat"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/verde_principal"
+        android:background="@drawable/fondo_chat"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
@@ -103,6 +121,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtMsgEnviar"
         app:layout_constraintTop_toBottomOf="@+id/rvChat"
+        app:layout_constraintVertical_bias="0.92"
         app:srcCompat="@drawable/enviar" />
 
     <androidx.constraintlayout.widget.Guideline

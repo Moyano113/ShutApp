@@ -18,10 +18,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     public List<String> listMsg;
 
+    //Constructor
     public RecyclerAdapter() {
         this.listMsg = new ArrayList<String>();
     }
 
+    //Agregar item a la lista y a su vez al recycler view
     public void insertarItem(String mensaje){
         listMsg.add(mensaje);
         notifyDataSetChanged();
@@ -34,7 +36,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     @NonNull
     @Override
     public RecyclerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
+        //Asigno el holder a la vista
         RecyclerHolder holder;
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_msg_list, parent, false);
         holder = new RecyclerHolder(v);
@@ -47,6 +49,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         String mensaje = listMsg.get(i);
 
+        //Aqui compruebo que elemento del holder debo usar según si el mensaje es envidado 'e' o
+        //recibido.
         if(mensaje.substring(0,1).equals("e")){
             holder.txtEnviado.setText(mensaje.substring(3));
             holder.txtRecibido.setText("");
@@ -62,6 +66,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         return listMsg.size();
     }
 
+    //Se crea un holder personalizado para conectar la parte visual al reycler view
     class RecyclerHolder extends RecyclerView.ViewHolder{
         TextView txtEnviado;
         TextView txtRecibido;

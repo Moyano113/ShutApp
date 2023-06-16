@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Se recoge el nombre de usuario de la LoginActivity
         user = getIntent().getStringExtra("user");
 
         lblUsuario = findViewById(R.id.lblUsuario);
@@ -58,9 +59,10 @@ public class MainActivity extends AppCompatActivity{
         rvChat.setAdapter(adapter);
 
         serverS = null;
-
+        //Ejecutamos este método para que la aplicación esté a la escucha de mensajes recibidos
         recibir();
 
+        //Se hace un listener para el boton de enviar
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,10 +71,12 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    //Método encargado del envío del mensaje
     private void enviar() {
         Thread hiloEnviar = new Thread(new Runnable() {
             @Override
             public void run() {
+                //Se comprueba si el campo 'IP' está vacío
                 if(txtIp.getText().toString().equals("")){
 
                     runOnUiThread(new Runnable() {
@@ -84,21 +88,28 @@ public class MainActivity extends AppCompatActivity{
 
                 }else{
                     try{
+                        //Se crea el socket para la conexión y el DataOutputStream para enviar el
+                        //mensaje
                         Socket socket = new Socket(txtIp.getText().toString(), PUERTO);
                         DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 
-                        String mensaje = txtMsgEnviar.getText().toString();
+                        //Guardo aqui el texto escrito en la caja de texto donde se escribe el
+                        //mensaje
+                        String mensaje = "  "+txtMsgEnviar.getText().toString()+"  ";
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                //Añado el mensaje al recyclerView
                                 adapter.insertarItem("env" + mensaje);
+                                //Paso el recyclerView a la ultima posicion para que baje el chat
                                 rvChat.scrollToPosition(adapter.getListMsg().size()-1);
+                                //Limpio la caja de texto para esperar el nuevo mensaje
                                 txtMsgEnviar.setText("");
                             }
                         });
 
-
+                        //Se envía el mensaje y se cierran el socket y el DataOutputStream
                         dos.writeUTF(mensaje);
                         dos.close();
                         socket.close();
@@ -123,38 +134,46 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
+        //Inicio el hilo y vuelvo a bajar a la ultima posicion en el chat
         hiloEnviar.start();
         rvChat.scrollToPosition(adapter.listMsg.size()+1);
     }
 
+    //Método encargado de recibir el mensaje
     private void recibir() {
-
+        //Indicamos que estamos conectados
         conectado = true;
 
         Thread hiloRecibir = new Thread(new Runnable() {
             @Override
             public void run() {
                 try{
+                    //Hacemos un socket indicando el puerto
                     serverS = new ServerSocket(PUERTO);
 
+                    //Mientras estemos conectados se ejecutará el siguiente bloque de código
                     while(conectado){
-
+                        //Se crea un socket a partir de la peticion del servidor enviada por el emisor
+                        //y se inicializa un lector de datos a partir del socket(ya que este traerá
+                        //el mensaje)
                         Socket socket = serverS.accept();
                         DataInputStream dis = new DataInputStream(socket.getInputStream());
 
+                        //Se lee y se guarda el mensaje en una variable
                         mensajes = dis.readUTF();
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-
-                                adapter.insertarItem("rec"+mensajes);
+                                //Se inserta el mensaje en el recyclerView
+                                adapter.insertarItem("rec"+mensajes);//"rec" para recibidos
                                 adapter.notifyDataSetChanged();
                                 rvChat.scrollToPosition(adapter.getListMsg().size() -1);
 
                             }
                         });
-
+                        //Se cierra el socket porque ya lo hemos usado y se cierra tambien el
+                        //ObjectInputStream
                         socket.close();
                         dis.close();
                     }
@@ -163,20 +182,24 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
+        //Se inicia el hilo recibir
         hiloRecibir.start();
         adapter.notifyDataSetChanged();
     }
 
+    //Método encargado de hacer toast
     public void makeToast(String msg){
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
+    //Se cierra la aplicacion
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        //Al cerrar la aplicación automaticamente se desconecta
         conectado = false;
 
+        //Comprueba si el servidor se ha cerrado; En caso de que no, lo cierra
         try {
             if (serverS != null && !serverS.isClosed()){
                 serverS.close();
@@ -187,9 +210,11 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+    //Se vuelve a abrir cuando estaba en segundo plano o suspendida
     @Override
     protected void onResume() {
         super.onResume();
+        //Se comprueba si se sigue conectado; Si no es así, lo conecta
         if (!conectado) {
             conectado = true;
         }
